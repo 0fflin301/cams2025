@@ -1,0 +1,5 @@
+
+screeninfo>=0.7.0
+colorama>=0.4.6
+streamlink==6.5.0
+cloudscraper>=1.2.71
