@@ -6,13 +6,13 @@ from fun.tools import Tool
 
 class Models:
     def __init__(self, path, top, models, backup):
-        self.file = path
+        self.path = path
         self.top = top
         self.models = models
         self.backupFile = backup
 
-    def readList(self, file):
-        with open(self.file, "r", encoding="utf8") as file:
+    def readList(self):
+        with open(self.path, "r", encoding="utf8") as file:
             result = file.read().split("\n")
         return result
 
@@ -24,18 +24,18 @@ class Models:
             pass
 
     def backup(self):
-        models = Models.readList(self, self.file)
+        models = self.readList()
         newList = []
         for model in models:
             if model != "" and model not in newList:
                 newList.append(model)
         Models.saveList(self, self.backupFile, newList)
-        Models.saveList(self, self.file, newList)
+        Models.saveList(self, self.path, newList)
         return newList
 
     def getModels(self):
         print(f"{Tool.YELLOW_BRIGHT}{Tool.now()} Reading models list.")
-        result = Models.readList(self, self.file)
+        result = self.readList()
         if result != [""]:
             result[self.top :] = random.sample(
                 result[self.top :], len(result) - self.top

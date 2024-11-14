@@ -20,9 +20,9 @@ else
     exit 1
 fi
 
-NAMES=("chaturbate", "stripchat")
-URLS=("https://raw.githubusercontent.com/community-plugins/streamlink-plugins/cloudscraper/plugins/chaturbate.py",
-      "https://raw.githubusercontent.com/community-plugins/streamlink-plugins/cloudscraper/plugins/stripchat.py")
+NAMES=("stripchat" "chaturbate")
+URLS=("https://raw.githubusercontent.com/community-plugins/streamlink-plugins/cloudscraper/plugins/stripchat.py"
+      "https://raw.githubusercontent.com/community-plugins/streamlink-plugins/cloudscraper/plugins/chaturbate.py")
 PYTHON_VERSION=$(python3 --version 2>&1)
 PYTHON=$(echo "$PYTHON_VERSION" | sed -E 's/Python ([0-9]+\.[0-9]+).*/python\1/')
 DEST_DIR="python3/lib/$PYTHON/site-packages/streamlink/plugins"

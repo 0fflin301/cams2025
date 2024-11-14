@@ -7,7 +7,7 @@ from colorama import init, Fore, Style
 
 init(autoreset=True)
 
-this = sys.path[0].replace("\\", "/")
+this = os.path.dirname(os.path.realpath(__file__))
 
 class Tool:
 

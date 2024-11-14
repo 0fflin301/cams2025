@@ -1,0 +1,32 @@
+{
+	"config": {
+		"top": 10,
+		"random": 20
+	},
+	"video":{
+		"mode": "monitor",
+		"screen": 0,
+		"windows": 16,
+		"volume": 50,
+		"audio": "default",
+		"options": ""
+	},
+	"stream":{
+		"streamlinkLog": 0,
+		"quality": "1080p,720p,540p,480p,360p,worst",
+		"timeOut": 10
+	},
+	"headers": {
+		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",	
+		"Accept-Language": "en-US;q=0.5,en;q=0.3",
+		"Accept": "*/*",
+		"Accept-Encoding": "gzip, deflate, br, zstd",
+		"Connection": "keep-alive",
+		"Upgrade-Insecure-Requests": "1"
+		},
+	"paths": {
+		"mpv": "C:/mpv/mpv.exe",
+		"models": "~/cams2025/models.txt",
+		"backup": "~/cams2025/backup/models.txt"
+	}
+}

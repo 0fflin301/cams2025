@@ -1,5 +1,6 @@
 import os
 import sys
+import shlex
 import subprocess
 import streamlink
 from fun.config import Config
@@ -18,10 +19,13 @@ class Stream:
         self.url = url.replace("__MODEL__", nickname)
         self.values = [stripchat, window, volume, geometry, screen]
         if sys.platform.startswith("win"):
+            self.streamlink = "streamlink"
             self.mpv = Tool.path(self.config.get_value("paths", "mpv"))
         elif sys.platform.startswith("darwin"):
             self.mpv = Tool.path("mpv-osx")
+            self.streamlink = "python3/bin/streamlink"
         elif sys.platform.startswith("linux"):
+            self.streamlink = "python3/bin/streamlink"
             self.mpv = Tool.path("mpv")
         self.audio = self.config.get_value("video", "audio")
         self.options = self.config.get_value("video", "options")
@@ -69,7 +73,10 @@ class Stream:
         )
 
     def logFile(self):
-        path = f"{Tool.LOG}/{Tool.now('%Y/%m')}"
+        if sys.platform.startswith("win"):
+            path = f"{Tool.LOG}/{Tool.now('%Y/%m')}"
+        else:
+            path = f"logs/{Tool.now('%Y/%m')}"
         if not os.path.exists(path):
             Tool.createPath(path)
         return f"{path}/StreamlinkCli-{Tool.now('%Y-%m-%d')}.txt"
@@ -78,8 +85,9 @@ class Stream:
         try:
             print(f"{Tool.now()} Attempting to connect with {self.model} on {url}")
             Tool.log(f"Attempting to connect with {self.model} on {url}")
-            Tool.log(self.command.replace("__URL__", url))
-            play = subprocess.Popen(self.command.replace("__URL__", url))
+            args = shlex.split(self.command.replace("__URL__", url))
+            Tool.log(args)
+            play = subprocess.Popen(args)
             Tool.sleep(7, 9)
             status = play.poll()
             if status == None:
@@ -105,10 +113,11 @@ class Stream:
             Tool.log(f"{self.model}:{url}:SUBPROCESS->{err}")
             Tool.log(self.command.replace("__URL__", url))
             return None
-        except Exception as e:
-            print(f"UNEXPECTED ERROR: {e}")
-            ool.log(f"{self.model}:{url}:{err}")
+        except Exception as err:
+            print(f"UNEXPECTED ERROR: {err}")
+            Tool.log(f"{self.model}:{url}:{err}")
             Tool.log(self.command.replace("__URL__", url))
+            raise err 
             return None
 
     def run(self):
